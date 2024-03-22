@@ -24,6 +24,7 @@ export const signup = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      blogs: [],
     });
     try {
       newUser.save();
@@ -55,5 +56,3 @@ export const login = async (req, res) => {
     res.status(500).json(error.message);
   }
 };
-
-

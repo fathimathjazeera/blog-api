@@ -23,6 +23,13 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  blogs: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Blog",
+      required: true,
+    },
+  ],
 });
 
 const UserModel = mongoose.model("User", UserSchema);
