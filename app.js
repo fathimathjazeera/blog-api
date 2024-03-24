@@ -2,6 +2,7 @@ import express from "express";
 import { configDotenv } from "dotenv";
 import mongoose from "mongoose";
 import UserRoutes from "./routes/user.js";
+import jwt from 'jsonwebtoken'
 configDotenv();
 
 const app = express();
@@ -14,4 +15,5 @@ app.listen(process.env.PORT, () => {
 mongoose.connect(process.env.MONGO_URI);
 
 app.use("/api/user", UserRoutes);
+
 
