@@ -2,7 +2,8 @@ import express from "express";
 import { configDotenv } from "dotenv";
 import mongoose from "mongoose";
 import UserRoutes from "./routes/user.js";
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
+import mangatholi from 'manga';
 configDotenv();
 
 const app = express();
