@@ -14,6 +14,8 @@ app.listen(process.env.PORT, () => {
 mongoose.connect(process.env.MONGO_URI);
 
 app.use("/api/user", UserRoutes);
-console.log("object");
-console.log("Gopika");
-console.log("tested ok")
+
+
+
+
+console.log("pokokokokok");
