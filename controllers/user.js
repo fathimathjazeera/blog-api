@@ -57,3 +57,11 @@ export const login = async (req, res) => {
     res.status(500).json(error.message);
   }
 };
+
+export const updateUser = async (req,res) =>{
+  try {
+    
+  } catch (error) {
+    
+  }
+}
