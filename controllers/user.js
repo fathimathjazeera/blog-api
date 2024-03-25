@@ -1,5 +1,6 @@
 import UserModel from "../models/users.js";
 import bcrypt from "bcryptjs";
+import { generateAccessToken } from "../utils/generateToken.js";
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -29,9 +30,16 @@ export const signup = async (req, res) => {
     });
     try {
       newUser.save();
+      let user= {
+       id: newUser._id,
+       name:newUser.name
+      }
+     const token= generateAccessToken(user)
       res
         .status(201)
-        .json({ data: newUser, message: "user created successfully" });
+        .json({ data: newUser, message: "user created successfully" , token:token});
+
+
     } catch (error) {
       res.status(500).json(error.message);
     }
