@@ -60,8 +60,16 @@ export const login = async (req, res) => {
 
 export const updateUser = async (req,res) =>{
   try {
-    
+    const {id} = req.params
+    const user = await UserModel.findByIdAndUpdate(id,req.body,{
+      new: true,
+    })
+    if(!user){
+      res.status(400).json({status:"failed", message: "User not found" })
+    }
+    res.status(200).json({status:"success",message: "successfully updated the user" , data: user })
   } catch (error) {
-    
+    res.status(500).json(err.message)
   }
 }
+
