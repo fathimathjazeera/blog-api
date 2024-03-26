@@ -18,6 +18,7 @@ const BolgSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  likes: [],
 });
 
 const BlogModel = mongoose.model("Blog", BolgSchema);
