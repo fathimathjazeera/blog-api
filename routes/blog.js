@@ -4,6 +4,7 @@ import {
   deleteBlog,
   getAllBlogs,
   getBlog,
+  likeUnlikeBlog,
   updateBlog,
 } from "../controllers/blog.js";
 
@@ -14,3 +15,4 @@ router.get("/:id", getBlog);
 router.post("/create", createBlog);
 router.put("/update/:id", updateBlog);
 router.delete("/:id", deleteBlog);
+router.put("/like", likeUnlikeBlog);

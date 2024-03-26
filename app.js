@@ -2,6 +2,7 @@ import express from "express";
 import { configDotenv } from "dotenv";
 import mongoose from "mongoose";
 import UserRoutes from "./routes/user.js";
+import BlogRoutes from './routes/blog.js'
 configDotenv();
 
 const app = express();
@@ -16,5 +17,6 @@ mongoose.connect(process.env.MONGO_URI)
 .catch(err => console.log(err.message))
 
 app.use("/api/user", UserRoutes);
+app.use('/api/blog', BlogRoutes)
 
 
