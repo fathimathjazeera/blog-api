@@ -62,3 +62,20 @@ export const deleteBlog = async (req, res) => {
     res.status(500).json(error.message);
   }
 };
+
+export const likeUnlikeBlog = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { userId } = req.body;
+    const blog = await BlogModel.findById(id);
+    if (blog.likes.includes(userId)) {
+      await blog.updateOne({ $pull: { likes: userId } });
+      res.status(200).json("Blog Disliked");
+    } else {
+      await blog.updateOne({ $push: { likes: userId } });
+      res.status(200).json("Blog liked");
+    }
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+};

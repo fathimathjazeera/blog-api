@@ -30,16 +30,16 @@ export const signup = async (req, res) => {
     });
     try {
       newUser.save();
-      let user= {
-       id: newUser._id,
-       name:newUser.name
-      }
-     const token= generateAccessToken(user)
-      res
-        .status(201)
-        .json({ data: newUser, message: "user created successfully" , token:token});
-
-
+      let user = {
+        id: newUser._id,
+        name: newUser.name,
+      };
+      const token = generateAccessToken(user);
+      res.status(201).json({
+        data: newUser,
+        message: "user created successfully",
+        token: token,
+      });
     } catch (error) {
       res.status(500).json(error.message);
     }
@@ -66,30 +66,36 @@ export const login = async (req, res) => {
   }
 };
 
-export const updateUser = async (req,res) =>{
+export const updateUser = async (req, res) => {
   try {
-    const {id} = req.params
-    const user = await UserModel.findByIdAndUpdate(id,req.body,{
+    const { id } = req.params;
+    const user = await UserModel.findByIdAndUpdate(id, req.body, {
       new: true,
-    })
-    if(!user){
-      res.status(400).json({status:"failed", message: "User not found" })
+    });
+    if (!user) {
+      res.status(400).json({ status: "failed", message: "User not found" });
     }
-    res.status(200).json({status:"success",message: "successfully updated the user" , data: user })
+    res.status(200).json({
+      status: "success",
+      message: "successfully updated the user",
+      data: user,
+    });
   } catch (error) {
-    res.status(500).json(err.message)
+    res.status(500).json(err.message);
   }
-}
+};
 
-export const deleteUser = async (req,res) =>{
+export const deleteUser = async (req, res) => {
   try {
-    const {id} = req.params
-    const user = await UserModel.findByIdAndDelete(id)
-    if(!user){
-      res.status(400).json({status:"failed", message: "User not found" })
+    const { id } = req.params;
+    const user = await UserModel.findByIdAndDelete(id);
+    if (!user) {
+      res.status(400).json({ status: "failed", message: "User not found" });
     }
-    res.status(200).json({status:"success",message: "Successfully deleted the user"})
+    res
+      .status(200)
+      .json({ status: "success", message: "Successfully deleted the user" });
   } catch (error) {
-    res.status(500).json(err.message)
+    res.status(500).json(err.message);
   }
-}
+};
