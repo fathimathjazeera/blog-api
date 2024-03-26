@@ -66,15 +66,29 @@ export const deleteBlog = async (req, res) => {
 export const likeUnlikeBlog = async (req, res) => {
   try {
     const { id } = req.params;
-    const { userId } = req.body;
+    const { user } = req.body;
     const blog = await BlogModel.findById(id);
-    if (blog.likes.includes(userId)) {
-      await blog.updateOne({ $pull: { likes: userId } });
+    if (blog.likes.includes(user)) {
+      await blog.updateOne({ $pull: { likes: user } });
       res.status(200).json("Blog Disliked");
     } else {
-      await blog.updateOne({ $push: { likes: userId } });
+      await blog.updateOne({ $push: { likes: user } });
       res.status(200).json("Blog liked");
     }
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+};
+
+export const commentBlog = async (req, res) => {
+  try {
+    const blogId = req.params.id;
+    const { user, text } = req.body;
+    const blog = await BlogModel.findById(blogId);
+    const comment = { user, text };
+    blog.comments.push(comment);
+    await blog.save();
+    res.status(201).json("Comment addded");
   } catch (error) {
     res.status(500).json(error.message);
   }
