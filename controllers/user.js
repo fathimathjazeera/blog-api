@@ -35,6 +35,8 @@ export const signup = async (req, res) => {
         name: newUser.name,
       };
       const token = generateAccessToken(user);
+      let refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
+            refreshTokens.push(refreshToken)
       res.status(201).json({
         data: newUser,
         message: "user created successfully",
@@ -65,6 +67,21 @@ export const login = async (req, res) => {
     res.status(500).json(error.message);
   }
 };
+
+
+let refreshTokens=[]
+//REFRESH TOKEN
+export const refreshToken=(req,res)=>{
+  const refreshToken = req.body.token
+  if(refreshToken == null) return res.sendStatus(401)
+  if(!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
+  jwt.verify(refreshToken,process.env.REFRESH_TOKEN_SECRET,(err,user)=>{
+if(err) return res.sendStatus(403)
+const accessToken= generateAccessToken({user:user.id})
+res.json({accessToken:accessToken})
+})
+}
+
 
 export const updateUser = async (req, res) => {
   try {
