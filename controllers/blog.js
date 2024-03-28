@@ -21,19 +21,16 @@ export const getBlog = async (req, res) => {
 
 export const createBlog = async (req, res) => {
   try {
-    const { title, image, description, user } = req.params;
+    const { title, image, description, user } = req.body;
     const newBlog = new BlogModel({
       title,
       image,
       description,
       user,
     });
-    try {
-      await newBlog.save();
-      res.status(201).json(newBlog);
-    } catch (error) {
-      res.status(500).json(error.message);
-    }
+
+    await newBlog.save();
+    res.status(201).json(newBlog);
   } catch (error) {
     res.status(500).json(error.message);
   }
@@ -89,6 +86,25 @@ export const commentBlog = async (req, res) => {
     blog.comments.push(comment);
     await blog.save();
     res.status(201).json("Comment addded");
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+};
+
+export const updateComment = async (req, res) => {
+  try {
+    const { blogId, commentId } = req.params;
+
+    const { user, newText } = req.body;
+    const blog = await BlogModel.findById(blogId);
+    const comment = blog.comments?.id(commentId);
+    if (comment.user == user) {
+      comment.text = newText;
+      await blog.save();
+      res.status(200).json(comment);
+    } else {
+      res.status(403).json("Action forbidden");
+    }
   } catch (error) {
     res.status(500).json(error.message);
   }
