@@ -2,7 +2,7 @@ import express from "express";
 import { configDotenv } from "dotenv";
 import mongoose from "mongoose";
 import UserRoutes from "./routes/user.js";
-import BlogRoutes from './routes/blog.js'
+import BlogRoutes from "./routes/blog.js";
 configDotenv();
 
 const app = express();
@@ -12,11 +12,10 @@ app.use(express.json());
 app.listen(process.env.PORT, () => {
   console.log(`running on "${process.env.PORT}"`);
 });
-mongoose.connect(process.env.MONGO_URI)
-.then(()=> console.log('database connected'))
-.catch(err => console.log(err.message))
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("database connected"))
+  .catch((err) => console.log(err.message));
 
 app.use("/api/user", UserRoutes);
-app.use('/api/blog', BlogRoutes)
-
-
+app.use("/api/blog", BlogRoutes);

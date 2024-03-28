@@ -34,7 +34,10 @@ const BolgSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  likes: [],
+  likes: {
+    type: [{ type: mongoose.Types.ObjectId, ref: "User" }], // Assuming likes contain user IDs
+    default: [],
+  },
   comments: [commentSchema],
 });
 
